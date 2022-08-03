@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Dict
+from typing import Any, Dict, List
 import json
 
 import click
@@ -9,13 +9,13 @@ LOGGER: logging.Logger = logging.getLogger(__name__)
 app: Flask = Flask(__name__)
 
 @app.route("/videos", methods=["get"])
-def videos() -> bytes:
-    return json.dumps(["a", "b"]).encode("utf-8")
+def videos() -> List[str]:
+    return ["a", "b"]
 
 @app.route("/echo", methods=["post"])
-def echo() -> bytes:
+def echo() -> Dict[str, Any]:    
     data: Dict[str, Any] = request.get_json() # type: ignore
-    return json.dumps(data).encode("utf-8")
+    return data
 
 @click.command()
 def main():
