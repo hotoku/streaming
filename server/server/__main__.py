@@ -14,8 +14,6 @@ app.config['JSON_AS_ASCII'] = False
 
 
 def get_con() -> sqlite3.Connection:
-    LOGGER.debug(DB_PATH)
-
     ret = sqlite3.connect(str(DB_PATH.resolve()))
     ret.row_factory = sqlite3.Row
     return ret
