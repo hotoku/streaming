@@ -36,9 +36,17 @@ function App() {
     <div className="App">
       <header className="App-header">ヘッダー</header>
       <div className="App-contents">
-        <ul>
+        <ul className="gallery">
           {videos.map((v) => {
-            return <li key={v.id}>{v.name}</li>;
+            const name =
+              typeof v.name === "string" ? v.name.substring(0, 3) : "unknown";
+            return (
+              <li key={v.id}>
+                <figure>
+                  <img alt={name}></img>
+                </figure>
+              </li>
+            );
           })}
         </ul>
       </div>

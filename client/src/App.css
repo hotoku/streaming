@@ -7,5 +7,21 @@
 .App-contents {
 }
 
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.gallery li {
+  list-style-type: none;
+  width: calc(33.33% - 1px);
+  margin: 0 0 1px 1px;
+}
+
+.gallery figure {
+  position: relative;
+  padding-right: 100%;
+}
+
 .App-footer {
 }
