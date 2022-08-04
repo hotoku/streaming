@@ -41,9 +41,13 @@ function App() {
             const name =
               typeof v.name === "string" ? v.name.substring(0, 10) : "unknown";
             return (
-              <li key={v.id} className="gallery-item">
-                {name}
-                <img src={`/video/image/${v.id}`} alt={name}></img>
+              <li key={v.id}>
+                <div>{name}</div>
+                <img
+                  className="gallery-item"
+                  src={`/video/image/${v.id}`}
+                  alt={name}
+                ></img>
               </li>
             );
           })}
