@@ -17,6 +17,7 @@ const fetchVideos = async (): Promise<VideosResponse> => {
 };
 
 function App() {
+  const [videos, setVideos] = useState<Video[]>([]);
   const [isSending, setIsSending] = useState<boolean>(false);
 
   useEffect(() => {
@@ -25,6 +26,7 @@ function App() {
       setIsSending(true);
 
       const data = await fetchVideos();
+      setVideos(data);
 
       console.log(data);
     };
@@ -33,20 +35,15 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <header className="App-header">ヘッダー</header>
+      <div className="App-contents">
+        <ul>
+          {videos.map((v) => {
+            return <li key={v.id}>{v.name}</li>;
+          })}
+        </ul>
+      </div>
+      <footer className="App-footer">フッター</footer>
     </div>
   );
 }
