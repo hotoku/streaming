@@ -44,7 +44,7 @@ def videos() -> list[dict[str, Any]]:
 @app.route("/video/image/<int:id>", methods=["get"])
 def video_image(id: str) -> Response:
     LOGGER.debug("id=%d", id)
-    return send_file("resource/neko.jpg", mimetype="image/jpg")
+    return send_file("resource/man.jpg", mimetype="image/jpg")
 
 
 @app.route("/echo", methods=["post"])
