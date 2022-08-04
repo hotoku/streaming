@@ -39,12 +39,11 @@ function App() {
         <ul className="gallery">
           {videos.map((v) => {
             const name =
-              typeof v.name === "string" ? v.name.substring(0, 3) : "unknown";
+              typeof v.name === "string" ? v.name.substring(0, 10) : "unknown";
             return (
-              <li key={v.id}>
-                <figure>
-                  <img alt={name}></img>
-                </figure>
+              <li key={v.id} className="gallery-item">
+                {name}
+                <img src={`/video/image/${v.id}`} alt={name}></img>
               </li>
             );
           })}

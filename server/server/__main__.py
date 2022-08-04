@@ -5,6 +5,7 @@ from pathlib import Path
 
 import click
 from flask import Flask, request, send_file
+from flask.wrappers import Response
 
 LOGGER: logging.Logger = logging.getLogger(__name__)
 DB_PATH: Path = (Path(__file__).parent / ".." / "db" / "db.sqlite").resolve()
@@ -40,10 +41,10 @@ def videos() -> list[dict[str, Any]]:
     return [dict(id=row["id"], name=row["name"]) for row in data]
 
 
-@app.route("/video/image/<id>", methods=["get"])
-def video_image(id: int) -> Any:
+@app.route("/video/image/<int:id>", methods=["get"])
+def video_image(id: str) -> Response:
     LOGGER.debug("id=%d", id)
-    return send_file("resource/logo.svg", mimetype="image/svg")
+    return send_file("resource/neko.jpg", mimetype="image/jpg")
 
 
 @app.route("/echo", methods=["post"])
