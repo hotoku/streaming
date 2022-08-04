@@ -1,6 +1,7 @@
 CREATE TABLE videos
 (
   id integer NOT NULL PRIMARY KEY,
-  path string NOT NULL,
-  name string NOT NULL
+  source_path string NOT NULL,
+  name string NOT NULL,
+  thumbnail_path string
 );
