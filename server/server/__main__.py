@@ -9,6 +9,7 @@ from flask.wrappers import Response
 
 LOGGER: logging.Logger = logging.getLogger(__name__)
 DB_PATH: Path = (Path(__file__).parent / ".." / "db" / "db.sqlite").resolve()
+RESOURCE_PATH: Path = (Path(__file__).parent) / ".." / "resource"
 
 app: Flask = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
@@ -44,7 +45,7 @@ def videos() -> list[dict[str, Any]]:
 @app.route("/video/image/<int:id>", methods=["get"])
 def video_image(id: str) -> Response:
     LOGGER.debug("id=%d", id)
-    return send_file("resource/man.jpg", mimetype="image/jpg")
+    return send_file(str(RESOURCE_PATH / "man.jpg"), mimetype="image/jpg")
 
 
 @app.route("/echo", methods=["post"])
