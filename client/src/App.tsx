@@ -1,7 +1,36 @@
 import logo from "./logo.svg";
 import "./App.css";
+import { useEffect, useState } from "react";
+
+type Video = {
+  id: number;
+  name: string;
+};
+type VideosResponse = Video[];
+
+const fetchVideos = async (): Promise<VideosResponse> => {
+  const resp = await fetch("/videos", {
+    method: "get",
+  });
+  const data: VideosResponse = await resp.json();
+  return data;
+};
 
 function App() {
+  const [isSending, setIsSending] = useState<boolean>(false);
+
+  useEffect(() => {
+    const request = async () => {
+      if (isSending) return;
+      setIsSending(true);
+
+      const data = await fetchVideos();
+
+      console.log(data);
+    };
+    request().catch(console.error);
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
