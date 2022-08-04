@@ -1,6 +1,6 @@
 import logging
 import sqlite3
-from typing import Any, Dict, List, Tuple
+from typing import Any
 from pathlib import Path
 
 import click
@@ -41,8 +41,8 @@ def videos() -> list[dict[str, Any]]:
 
 
 @app.route("/echo", methods=["post"])
-def echo() -> Dict[str, Any]:
-    data: Dict[str, Any] = request.get_json()  # type: ignore
+def echo() -> dict[str, Any]:
+    data: dict[str, Any] = request.get_json()  # type: ignore
     return data
 
 
