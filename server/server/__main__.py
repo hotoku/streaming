@@ -27,7 +27,7 @@ def setup_logger(debug: bool = False):
 
 
 @app.route("/videos", methods=["get"])
-def videos() -> List[Dict[int, str]]:
+def videos() -> list[dict[str, Any]]:
     con = get_con()
     cur = con.cursor()
     data = cur.execute("""
@@ -37,7 +37,7 @@ def videos() -> List[Dict[int, str]]:
     from
       videos
     """)
-    return [dict(id=row["id"], name=row["name"]) for row in data]  # type: ignore
+    return [dict(id=row["id"], name=row["name"]) for row in data]
 
 
 @app.route("/echo", methods=["post"])
