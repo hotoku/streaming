@@ -4,7 +4,7 @@ from typing import Any
 from pathlib import Path
 
 import click
-from flask import Flask, request
+from flask import Flask, request, send_file
 
 LOGGER: logging.Logger = logging.getLogger(__name__)
 DB_PATH: Path = (Path(__file__).parent / ".." / "db" / "db.sqlite").resolve()
@@ -38,6 +38,12 @@ def videos() -> list[dict[str, Any]]:
       videos
     """)
     return [dict(id=row["id"], name=row["name"]) for row in data]
+
+
+@app.route("/video/image/<id>", methods=["get"])
+def video_image(id: int) -> Any:
+    LOGGER.debug("id=%d", id)
+    return send_file("resource/logo.svg", mimetype="image/svg")
 
 
 @app.route("/echo", methods=["post"])
