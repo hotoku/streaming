@@ -46,7 +46,7 @@ def make_thumbnail_1(src_path: str, resource_dir: str) -> str:
 
 def make_thumbnail(src_files: list[str], resource_dir: str) -> list[str | None]:
     # make_thumbnail_1(src_files[0], resource_dir)
-    with ProcessPoolExecutor() as ex:
+    with ProcessPoolExecutor(max_workers=None) as ex:
         fs = [
             ex.submit(make_thumbnail_1, f, resource_dir)
             for f in src_files
@@ -58,7 +58,7 @@ def make_thumbnail(src_files: list[str], resource_dir: str) -> list[str | None]:
 
 
 def doit(cur: sqlite3.Cursor, root_dir: str, resource_dir) -> None:
-    files = glob(f"{root_dir}/**")
+    files = glob(f"{root_dir}/**")[:100]
     thumbs = make_thumbnail(files, resource_dir)
     names = to_names(files)
     assert len(files) == len(thumbs) == len(names)
