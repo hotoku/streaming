@@ -24,8 +24,21 @@ def get_con() -> sqlite3.Connection:
 def setup_logger(debug: bool = False):
     logging.basicConfig(
         filename="server.log",
-        level=logging.DEBUG if debug else logging.INFO
+        level=logging.DEBUG if debug else logging.INFO,
+        format="%(asctime)s %(levelname)s %(threadName)s %(name)s %(message)s"
     )
+
+
+@app.route("/", methods=["get"])
+def index():
+    LOGGER.debug("index")
+    return send_file(RESOURCE_PATH / "build" / "index.html",
+                     mimetype="text/html")
+
+
+@app.route("/static/js/main.4d55f991.js", methods=["get"])
+def hoge():
+    return send_file(RESOURCE_PATH / "build" / "static" / "main.4d55f991.js")
 
 
 @app.route("/videos", methods=["get"])
@@ -43,9 +56,17 @@ def videos() -> list[dict[str, Any]]:
 
 
 @app.route("/video/image/<int:id>", methods=["get"])
-def video_image(id: str) -> Response:
+def video_image(id: int) -> Response:
     LOGGER.debug("id=%d", id)
-    return send_file(str(RESOURCE_PATH / "man.jpg"), mimetype="image/jpg")
+    return send_file(RESOURCE_PATH / "man.jpg",
+                     mimetype="image/jpg")  # type: ignore
+
+
+@app.route("/video/<int:id>", methods=["get"])
+def video_file(id: int) -> Response:
+    LOGGER.debug("id=%s", id)
+    return send_file(RESOURCE_PATH / "9.mp4",
+                     mimetype="video/mp4")  # type: ignore
 
 
 @app.route("/echo", methods=["post"])

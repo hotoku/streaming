@@ -36,7 +36,7 @@ function App() {
     <div className="App">
       <header className="App-header">ヘッダー</header>
       <video controls width="250">
-        <source src="/9.mp4" type="video/mp4" />
+        <source src="/video/1" type="video/mp4" />
       </video>
 
       <div className="App-contents">
