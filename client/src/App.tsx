@@ -37,7 +37,6 @@ function App() {
       <header className="App-header">ヘッダー</header>
       <video controls width="250">
         <source src="/9.mp4" type="video/mp4" />
-        Sorry, your browser doesn't support embedded videos.
       </video>
 
       <div className="App-contents">
