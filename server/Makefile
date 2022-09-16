@@ -3,6 +3,11 @@ THUMBNAIL_DIR := resource/thumbnails
 INFO_JSON := ".info.json"
 
 
+.PHONY: start
+start:
+	python -m server -d
+
+
 .PHONY: db
 db: thumbnails
 	make -C db INFO_JSON=$(PWD)/$(INFO_JSON)
