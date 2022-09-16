@@ -1,11 +1,7 @@
 import { Video } from "../types/Video";
 
 const makeElement = (v: Video): JSX.Element => {
-  return (
-    <div key={v.id}>
-      {v.video_path}, {v.thumbnail_path}, {v.id}
-    </div>
-  );
+  return <img src={v.thumbnail_path} />;
 };
 
 export const ThumbnailList = (props: { vs: Video[] }): JSX.Element => {
