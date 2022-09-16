@@ -2,3 +2,4 @@ readme.md
 tasks.md
 dev-docs/
 /server/.info.json
+/server/db/load.done

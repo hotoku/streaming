@@ -3,8 +3,7 @@ LOADED := load.done
 
 
 $(LOADED): $(DB_FILE)
-	@echo INFO_JSON $(INFO_JSON)
-	python load.py --json-path=$(INFO_JSON)
+	python load.py $(DB_FILE) $(INFO_JSON)
 	touch $@
 
 
