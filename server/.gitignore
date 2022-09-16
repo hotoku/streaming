@@ -5,3 +5,4 @@
 !/resource/videos/.gitkeep
 /resource/thumbnails/
 !/resource/thumbnails/.gitkeep
+.python-version
