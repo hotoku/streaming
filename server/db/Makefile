@@ -1,15 +1,16 @@
 DB_FILE := db.sqlite
-RESOURCE_DIR := $(realpath $(PWD)/../resource)
+LOADED := load.done
 
 
-.PHONY: load
-load: $(DB_FILE)
-	python load.py $(DB_FILE) $(RESOURCE_DIR)
+$(LOADED): $(DB_FILE)
+	@echo INFO_JSON $(INFO_JSON)
+	python load.py --json-path=$(INFO_JSON)
+	touch $@
 
 
 $(DB_FILE):
-	cat create.sql | sqlite3 $@
+	@cat create.sql | sqlite3 $@
 
 
 clean:
-	rm $(DB_FILE)
+	rm -rf $(DB_FILE) $(LOADED)
