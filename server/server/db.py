@@ -1,5 +1,7 @@
 import sqlite3
 import os
+from sqlite3.dbapi2 import Cursor
+from typing import Any, Iterable, List, Mapping
 
 
 def db_path() -> str:
@@ -15,8 +17,18 @@ def connect() -> sqlite3.Connection:
     return ret
 
 
-def random_list():
+def random_list(n: int = 100) -> Iterable[Mapping[str, Any]]:
     con = connect()
     cur = con.cursor()
-    ret = cur.execute("select * from videos")
-    return [r for r in ret]
+    ret = cur.execute(f"""
+    select
+      id,
+      video_path,
+      thumbnail_path
+    from
+      videos
+    order by
+      random()
+    limit {n}
+    """)
+    return ret
