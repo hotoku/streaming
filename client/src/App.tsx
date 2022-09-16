@@ -8,7 +8,7 @@ interface Video {
 }
 
 const App = () => {
-  const [videos, setVideos] = useState<Array<Video>>([]);
+  const [videos, setVideos] = useState<Video[]>([]);
   return <div>hoge</div>;
 };
 
