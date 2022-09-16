@@ -1,15 +1,14 @@
-DB_FILE := db.sqlite
 LOADED := load.done
 
 
-$(LOADED): $(DB_FILE)
-	python load.py $(DB_FILE) $(INFO_JSON)
+$(LOADED): $(DB_PATH)
+	python load.py $(DB_PATH) $(INFO_JSON)
 	touch $@
 
 
-$(DB_FILE):
+$(DB_PATH):
 	@cat create.sql | sqlite3 $@
 
 
 clean:
-	rm -rf $(DB_FILE) $(LOADED)
+	rm -rf $(DB_PATH) $(LOADED)

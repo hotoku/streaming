@@ -1,6 +1,20 @@
 VIDEO_DIR := resource/videos
 THUMBNAIL_DIR := resource/thumbnails
-INFO_JSON := ".info.json"
+export INFO_JSON := $(PWD)/.info.json
+export DB_PATH := $(PWD)/db/db.sqlite
+
+
+define indent
+@echo "   "$1
+endef
+
+
+.PHONY: usage
+usage:
+	@echo available commands are following:
+	$(call indent,"make start")
+	$(call indent,"make db")
+	$(call indent,"make clean")
 
 
 .PHONY: start
@@ -10,7 +24,7 @@ start:
 
 .PHONY: db
 db: thumbnails
-	make -C db INFO_JSON=$(PWD)/$(INFO_JSON)
+	make -C db
 
 
 .PHONY: thumbnails
