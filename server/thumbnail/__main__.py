@@ -1,5 +1,4 @@
 import pathlib as pl
-import subprocess as sp
 import os
 
 import click
