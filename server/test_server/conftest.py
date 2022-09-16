@@ -3,7 +3,6 @@ from xprocess import ProcessStarter
 from flask import Flask
 from flask.testing import FlaskClient
 
-import server as _server
 
 @pytest.fixture
 def app():
@@ -13,9 +12,11 @@ def app():
     })
     yield app
 
+
 @pytest.fixture
 def client(app: Flask) -> FlaskClient:
     return app.test_client()
+
 
 @pytest.fixture
 def server(xprocess):

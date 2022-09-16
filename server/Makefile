@@ -17,3 +17,8 @@ thumbnails:
 clean:
 	rm -rf $(INFO_JSON) $(THUMBNAIL_DIR)/*.jpg
 	make -C db clean
+
+
+.PHONY: test
+test:
+	PYTHONPATH=$(PWD) pytest
