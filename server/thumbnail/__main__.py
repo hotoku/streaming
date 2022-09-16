@@ -45,7 +45,7 @@ def make_relative(root: str, path: str) -> str:
 @click.command()
 @click.argument("root-dirs", type=StrList())
 @click.argument("dest-root", type=click.Path(file_okay=False))
-@click.option("--json-path", type=click.Path(dir_okay=False), default=".info.json")
+@click.argument("json-path", type=click.Path(dir_okay=False))
 @click.option("--extension", type=str, default="mp4")
 def main(root_dirs: str, dest_root: str, json_path: str,
          extension: str):

@@ -10,7 +10,7 @@ db: thumbnails
 
 .PHONY: thumbnails
 thumbnails:
-	python -m thumbnail $(VIDEO_DIR) $(THUMBNAIL_DIR) --json-path=$(INFO_JSON)
+	python -m thumbnail $(VIDEO_DIR) $(THUMBNAIL_DIR) $(INFO_JSON)
 
 
 .PHONY: clean
