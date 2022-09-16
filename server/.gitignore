@@ -1,8 +1,7 @@
 /*/__pycache__/
 *.log
 /resource/*.png
-/resource/videos/
-!/resource/videos/.gitkeep
+/resource/videos/*.mp4
 /resource/thumbnails/
 !/resource/thumbnails/.gitkeep
 .python-version
