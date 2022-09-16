@@ -7,9 +7,31 @@ interface Video {
   id: number;
 }
 
+const makeElement = (v: Video) => {
+  return (
+    <div>
+      {v.video_path}, {v.thumbnail_path}, {v.id}
+    </div>
+  );
+};
+
+const fetchVideoList = (setVideos: any) => {
+  return 1;
+};
+
 const App = () => {
   const [videos, setVideos] = useState<Video[]>([]);
-  return <div>hoge</div>;
+  useEffect(() => {
+    setVideos([
+      {
+        video_path: "a",
+        thumbnail_path: "b",
+        id: 1,
+      },
+    ]);
+    fetchVideoList(1);
+  });
+  return <div>{videos.map(makeElement)}</div>;
 };
 
 export default App;
