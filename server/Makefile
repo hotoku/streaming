@@ -21,4 +21,4 @@ clean:
 
 .PHONY: test
 test:
-	PYTHONPATH=$(PWD) pytest
+	DB_PATH=$(PWD)/db/db.sqlite PYTHONPATH=$(PWD) pytest
