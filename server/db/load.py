@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-from genericpath import exists
 import logging
 import json
 from typing import Iterable, Mapping
