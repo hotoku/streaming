@@ -3,6 +3,8 @@ import os
 from typing import List
 from dataclasses import dataclass
 
+from . import environment_variables as ev
+
 
 @dataclass
 class DbRecord:
@@ -12,7 +14,7 @@ class DbRecord:
 
 
 def db_path() -> str:
-    ret = os.getenv("DB_PATH")
+    ret = ev.db_path
     if ret is None:
         raise RuntimeError("DB_PATH env var is not set")
     return ret

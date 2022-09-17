@@ -2,6 +2,7 @@ VIDEO_DIR := resource/videos
 THUMBNAIL_DIR := resource/thumbnails
 export INFO_JSON := $(PWD)/.info.json
 export DB_PATH := $(PWD)/db/db.sqlite
+export STATIC_PATH := $(PWD)/resource
 
 
 define indent

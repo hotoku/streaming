@@ -2,9 +2,9 @@ import os
 from flask import Flask, request, send_from_directory
 
 from . import db
+from . import environment_variables as ev
 
-
-app: Flask = Flask("server")
+app: Flask = Flask("server", static_folder=ev.static_path)
 app.json.ensure_ascii = False  # type: ignore
 
 
@@ -14,6 +14,6 @@ def video_list():
     return db.random_list(int(num))
 
 
-@app.route("/static/hoge.json")
-def resource():
-    return send_from_directory("static", "hoge.json")
+@app.route("/resource/<path:path>")
+def resource(path: str):
+    return send_from_directory(ev.static_path, path)
