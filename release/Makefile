@@ -13,14 +13,9 @@ endef
 .PHONY: usage
 usage:
 	@echo available commands are following:
-	$(call indent,"make start")
 	$(call indent,"make db")
 	$(call indent,"make clean")
-
-
-.PHONY: start
-start:
-	python -m server -d
+	$(call indent,"make run")
 
 
 .PHONY: db
@@ -35,12 +30,12 @@ thumbnails:
 		--pos "00:00:20.000"
 
 
-.PHONY: test
-test:
-	DB_PATH=$(PWD)/db/db.sqlite PYTHONPATH=$(PWD) pytest
-
-
 .PHONY: clean
 clean:
 	rm -rf $(INFO_JSON) $(THUMBNAIL_DIR)/*.jpg
 	make -C db clean
+
+
+.PHONY: run
+run:
+	PORT=80 STATIC_PATH=$(PWD)/static DB_PATH=../server/db/db.sqlite RESOURCE_PATH=../server/resource exec python -m server
