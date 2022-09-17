@@ -39,7 +39,8 @@ def make_relative(root: str, path: str) -> str:
     p1 = str(pl.Path(root).resolve())
     p2 = str(pl.Path(path).resolve())
     assert p2.startswith(p1)
-    return os.path.join(root, re.sub(f"^{p1}/", "", p2))
+    ret = re.sub(f"^{p1}/", "", p2)
+    return ret
 
 
 def make_absolute(s: Union[str, pl.Path]) -> str:
@@ -47,16 +48,21 @@ def make_absolute(s: Union[str, pl.Path]) -> str:
 
 
 @click.command()
-@click.argument("root-dir", type=click.Path(file_okay=False),
-                help="The path to directory where our web app stores static resources.")
-@click.argument("video-dirs", type=StrList(),
-                help="The path to directory where our web app stores videos.")
-@click.argument("dest-root", type=click.Path(file_okay=False),
-                help="The path to directory where our web app stores thumbnails.")
+@click.argument("root-dir", type=click.Path(file_okay=False))
+@click.argument("video-dirs", type=StrList())
+@click.argument("dest-root", type=click.Path(file_okay=False))
 @click.argument("json-path", type=click.Path(dir_okay=False))
 @click.option("--extension", type=str, default="mp4")
 def main(root_dir: str, video_dirs: List[str], dest_root: str, json_path: str,
          extension: str):
+    """Make thumbnails from videos in VIDEO_DIRS. Thumbnails are saved in DEST_ROOT. Resulting paths are reported in JSON_PATH relative to ROOT_DIR.
+
+    ROOT_DIR is the path of th directory where our app stores static files.
+    VIDEO_DIRS is the paths of directories where our app stores videos.
+    DEST_ROOT is the path of the directory where our app stores thumbnails.
+    JSON_PATH is the path where paths of videos and thumbnails are reported.
+    """
+
     root_dir = make_absolute(root_dir)
     video_dirs = list(map(make_absolute, video_dirs))
     dest_root = make_absolute(dest_root)

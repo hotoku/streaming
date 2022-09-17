@@ -10,11 +10,18 @@ app: Flask = Flask("server")
 app.json.ensure_ascii = False  # type: ignore
 
 
-@app.route("/video/<path:path>")
-def video(path: str):
-    print("video =", path)
-    return send_file(Path(ev.resource_path) / path,
-                     mimetype="video/mp4")  # type: ignore
+@app.route("/video/<int:id>")
+def video(id: int):
+    path = request.args.get("path") or \
+        db.get_video(id).video_path
+    return send_file(Path(ev.resource_path) / path)
+
+
+@app.route("/thumbnail/<int:id>")
+def thumbnail(id: int):
+    path = request.args.get("path") or \
+        db.get_video(id).thumbnail_path
+    return send_file(Path(ev.resource_path) / path)
 
 
 @app.route("/video/list")

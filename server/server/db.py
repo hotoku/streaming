@@ -20,6 +20,27 @@ def db_path() -> str:
     return ret
 
 
+def get_video(id: int) -> DbRecord:
+    con = connect()
+    cur = con.cursor()
+    ret = cur.execute(f"""
+    select
+      id,
+      video_path,
+      thumbnail_path
+    from
+      videos
+    where
+      id = {id}
+    """)
+    obj = next(ret)
+    return DbRecord(
+        obj["id"],
+        obj["video_path"],
+        obj["thumbnail_path"]
+    )
+
+
 def connect() -> sqlite3.Connection:
     ret = sqlite3.connect(db_path())
     ret.row_factory = sqlite3.Row

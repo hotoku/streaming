@@ -1,10 +1,10 @@
 import { Video } from "../types/Video";
 
 const makeElement = (v: Video): JSX.Element => {
-  const url = v.thumbnail_path;
+  const url = `/video/${v.id}?path=${v.video_path}`;
   return (
-    <a href={"/video/" + v.video_path.replace("resource/", "")}>
-      <img src={url} key={v.id} alt="thumbnail" />
+    <a key={v.id} href={url}>
+      <img src={url} alt="thumbnail" />
     </a>
   );
 };
