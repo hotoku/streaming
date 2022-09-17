@@ -2,7 +2,7 @@ import * as React from "react";
 import { Routes, Route, Outlet, Link, BrowserRouter } from "react-router-dom";
 import { Home } from "./Home";
 
-export default function App() {
+const App = (): JSX.Element => {
   return (
     <BrowserRouter>
       <Routes>
@@ -13,7 +13,7 @@ export default function App() {
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 function About() {
   return (
@@ -41,3 +41,5 @@ function NoMatch() {
     </div>
   );
 }
+
+export default App;
