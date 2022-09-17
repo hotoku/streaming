@@ -1,5 +1,4 @@
-import * as React from "react";
-import { Routes, Route, Outlet, Link, BrowserRouter } from "react-router-dom";
+import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
 import { Home } from "./Home";
 
 const App = (): JSX.Element => {
