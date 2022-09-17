@@ -1,7 +1,9 @@
 import { Video } from "../types/Video";
 
 const makeElement = (v: Video): JSX.Element => {
-  return <img src={v.thumbnail_path} key={v.id} />;
+  const url = v.thumbnail_path.replace("resource/", "hoge/");
+  console.log(url);
+  return <img src={"/" + url} key={v.id} />;
 };
 
 export const ThumbnailList = (props: { vs: Video[] }): JSX.Element => {
