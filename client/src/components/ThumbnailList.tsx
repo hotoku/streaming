@@ -3,8 +3,9 @@ import { Video } from "../types/Video";
 
 const makeElement = (v: Video): JSX.Element => {
   const turl = `/thumbnail/${v.id}?path=${v.thumbnail_path}`;
-  const link = `/play/${v.id}?path=${v.video_path}`;
-  console.log(link);
+  const path = window.btoa(v.video_path);
+  const link = `/play/${v.id}/path/${path}`;
+  console.log(path);
   return (
     <Link to={link} key={v.id}>
       <img src={turl} alt="thumbnail" />

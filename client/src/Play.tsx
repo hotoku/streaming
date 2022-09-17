@@ -3,9 +3,17 @@ import { useParams, useSearchParams } from "react-router-dom";
 
 export const Play: React.FC<{}> = () => {
   const params = useParams();
-  const [sparams, setSparams] = useSearchParams();
-  console.log("id = ", params["id"]);
-  console.log("path = ", sparams.get("path"));
+  const id = params["id"];
+  const path = params["path"];
+  let url = `/video/${id}`;
+  if (path) {
+    url += `?path=${window.atob(path)}`;
+  }
+  console.log(`id=${id}, path=${path}, url=${url}`);
 
-  return <div>play</div>;
+  return (
+    <video controls width="720">
+      <source src={url} type="video/mp4" />
+    </video>
+  );
 };

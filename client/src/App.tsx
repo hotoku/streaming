@@ -8,6 +8,7 @@ const App = (): JSX.Element => {
       <Routes>
         <Route index element={<Home />} />
         <Route path="/play/:id" element={<Play />} />
+        <Route path="/play/:id/path/:path" element={<Play />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </BrowserRouter>
