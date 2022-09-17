@@ -8,14 +8,14 @@ class ThumbnailConvertError(Exception):
     pass
 
 
-def make_thumbnail(video: str, thumb: str) -> None:
+def make_thumbnail(video: str, thumb: str, pos: str) -> None:
     ret = sp.run(
         [
             "ffmpeg",
             "-i",
             video,
             "-ss",
-            "00:00:00.010",
+            pos,
             "-y",
             "-vframes",
             "1",
@@ -33,6 +33,7 @@ def make_thumbnail(video: str, thumb: str) -> None:
 class Thumbnail(luigi.Task):
     src_path: str = luigi.Parameter()  # type: ignore
     dest_root: str = luigi.Parameter(significant=False)  # type: ignore
+    pos: str = luigi.Parameter(significant=False)  # type: ignore
 
     @staticmethod
     def dest_path(src_path: str, dest_root: str) -> str:
@@ -49,4 +50,5 @@ class Thumbnail(luigi.Task):
     def run(self):
         make_thumbnail(self.src_path,
                        self.dest_path(self.src_path,
-                                      self.dest_root))
+                                      self.dest_root),
+                       self.pos)

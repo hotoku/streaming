@@ -3,6 +3,7 @@ import re
 import pathlib as pl
 import os
 import json
+from glob import glob
 
 import click
 from click.core import Context, Parameter
@@ -53,8 +54,10 @@ def make_absolute(s: Union[str, pl.Path]) -> str:
 @click.argument("dest-root", type=click.Path(file_okay=False))
 @click.argument("json-path", type=click.Path(dir_okay=False))
 @click.option("--extension", type=str, default="mp4")
+@click.option("--use-pathlib/--no-use-pathlib", default=False)
+@click.option("--pos", type=str, default="00:00:00.010")
 def main(root_dir: str, video_dirs: List[str], dest_root: str, json_path: str,
-         extension: str):
+         extension: str, use_pathlib: bool, pos: str):
     """Make thumbnails from videos in VIDEO_DIRS. Thumbnails are saved in DEST_ROOT. Resulting paths are reported in JSON_PATH relative to ROOT_DIR.
 
     ROOT_DIR is the path of th directory where our app stores static files.
@@ -70,17 +73,22 @@ def main(root_dir: str, video_dirs: List[str], dest_root: str, json_path: str,
     if not os.path.exists(dest_root):
         os.makedirs(dest_root)
 
-    files = [
-        make_absolute(f) for d in video_dirs for f in pl.Path(d).glob(f"./**/*.{extension}")
-    ]
+    if use_pathlib:
+        files = [
+            make_absolute(f) for d in video_dirs for f in pl.Path(d).glob(f"./**/*.{extension}")
+        ]
+    else:
+        files = [
+            make_absolute(f) for d in video_dirs for f in glob(f"{d}/**/*.{extension}")
+        ]
     tasks = [
-        Thumbnail(file, dest_root)
+        Thumbnail(file, dest_root, pos)
         for file in files
     ]
     luigi.build(
         tasks,
         local_scheduler=True,
-        workers=4
+        workers=os.cpu_count()
     )
     info = [
         dict(
