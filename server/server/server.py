@@ -10,6 +10,7 @@ from . import environment_variables as ev
 
 if ev.static_path is not None:
     app: Flask = Flask("server",
+                       static_url_path="",
                        static_folder=ev.static_path)
 else:
     app: Flask = Flask("server")

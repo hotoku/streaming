@@ -37,10 +37,8 @@ class StrList(ParamType):
 
 
 def make_relative(root: str, path: str) -> str:
-    p1 = str(pl.Path(root).resolve())
-    p2 = str(pl.Path(path).resolve())
-    assert p2.startswith(p1)
-    ret = re.sub(f"^{p1}/", "", p2)
+    assert path.startswith(root)
+    ret = re.sub(f"^{root}/", "", path)
     return ret
 
 
