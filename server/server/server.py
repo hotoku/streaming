@@ -1,12 +1,18 @@
 import os
 from pathlib import Path
+from typing import Optional
+from click.core import Option
 from flask import Flask, request, send_from_directory
 from flask.helpers import send_file
 
 from . import db
 from . import environment_variables as ev
 
-app: Flask = Flask("server")
+if ev.static_path is not None:
+    app: Flask = Flask("server",
+                       static_folder=ev.static_path)
+else:
+    app: Flask = Flask("server")
 app.json.ensure_ascii = False  # type: ignore
 
 
@@ -33,3 +39,8 @@ def video_list():
 @app.route("/resource/<path:path>")
 def resource(path: str):
     return send_from_directory(ev.resource_path, path)
+
+
+@app.route("/")
+def index():
+    return send_file(Path(ev.static_path) / "index.html")
