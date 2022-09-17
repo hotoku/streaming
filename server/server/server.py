@@ -1,16 +1,20 @@
 import os
+from pathlib import Path
 from flask import Flask, request, send_from_directory
+from flask.helpers import send_file
 
 from . import db
 from . import environment_variables as ev
 
-app: Flask = Flask("server", static_folder=ev.static_path)
+app: Flask = Flask("server")
 app.json.ensure_ascii = False  # type: ignore
 
 
-@app.route("/video/<int:id>")
-def video(id: int):
-    ret = db.get_video(id)
+@app.route("/video/<path:path>")
+def video(path: str):
+    print("video =", path)
+    return send_file(Path(ev.resource_path) / path,
+                     mimetype="video/mp4")  # type: ignore
 
 
 @app.route("/video/list")
@@ -21,4 +25,4 @@ def video_list():
 
 @app.route("/resource/<path:path>")
 def resource(path: str):
-    return send_from_directory(ev.static_path, path)
+    return send_from_directory(ev.resource_path, path)

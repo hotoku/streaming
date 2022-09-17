@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any, List, Optional, Union
 import re
 import pathlib as pl
 import os
@@ -42,17 +42,30 @@ def make_relative(root: str, path: str) -> str:
     return os.path.join(root, re.sub(f"^{p1}/", "", p2))
 
 
+def make_absolute(s: Union[str, pl.Path]) -> str:
+    return str(pl.Path(s).resolve().absolute())
+
+
 @click.command()
-@click.argument("root-dirs", type=StrList())
-@click.argument("dest-root", type=click.Path(file_okay=False))
+@click.argument("root-dir", type=click.Path(file_okay=False),
+                help="The path to directory where our web app stores static resources.")
+@click.argument("video-dirs", type=StrList(),
+                help="The path to directory where our web app stores videos.")
+@click.argument("dest-root", type=click.Path(file_okay=False),
+                help="The path to directory where our web app stores thumbnails.")
 @click.argument("json-path", type=click.Path(dir_okay=False))
 @click.option("--extension", type=str, default="mp4")
-def main(root_dirs: str, dest_root: str, json_path: str,
+def main(root_dir: str, video_dirs: List[str], dest_root: str, json_path: str,
          extension: str):
+    root_dir = make_absolute(root_dir)
+    video_dirs = list(map(make_absolute, video_dirs))
+    dest_root = make_absolute(dest_root)
+
     if not os.path.exists(dest_root):
         os.makedirs(dest_root)
+
     files = [
-        str(f) for d in root_dirs for f in pl.Path(d).glob(f"./**/*.{extension}")
+        make_absolute(f) for d in video_dirs for f in pl.Path(d).glob(f"./**/*.{extension}")
     ]
     tasks = [
         Thumbnail(file, dest_root)
@@ -65,9 +78,9 @@ def main(root_dirs: str, dest_root: str, json_path: str,
     )
     info = [
         dict(
-            video=f,
+            video=make_relative(root_dir, f),
             thumbnail=make_relative(
-                dest_root, Thumbnail.dest_path(f, dest_root))
+                root_dir, Thumbnail.dest_path(f, dest_root))
         )
         for f in files
     ]

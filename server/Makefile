@@ -1,8 +1,8 @@
-VIDEO_DIR := resource/videos
-THUMBNAIL_DIR := resource/thumbnails
 export INFO_JSON := $(PWD)/.info.json
 export DB_PATH := $(PWD)/db/db.sqlite
-export STATIC_PATH := $(PWD)/resource
+export RESOURCE_PATH := $(PWD)/resource
+VIDEO_DIR = $(RESOURCE_PATH)/videos
+THUMBNAIL_DIR = $(RESOURCE_PATH)/thumbnails
 
 
 define indent
@@ -30,7 +30,7 @@ db: thumbnails
 
 .PHONY: thumbnails
 thumbnails:
-	python -m thumbnail $(VIDEO_DIR) $(THUMBNAIL_DIR) $(INFO_JSON)
+	python -m thumbnail $(RESOURCE_PATH) $(VIDEO_DIR) $(THUMBNAIL_DIR) $(INFO_JSON)
 
 
 .PHONY: test
