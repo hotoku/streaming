@@ -1,12 +1,13 @@
+import { Link } from "react-router-dom";
 import { Video } from "../types/Video";
 
 const makeElement = (v: Video): JSX.Element => {
   const vurl = `/video/${v.id}?path=${v.video_path}`;
   const turl = `/thumbnail/${v.id}?path=${v.thumbnail_path}`;
   return (
-    <a key={v.id} href={vurl}>
+    <Link to={`/play/${v.id}`} key={v.id}>
       <img src={turl} alt="thumbnail" />
-    </a>
+    </Link>
   );
 };
 

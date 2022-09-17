@@ -1,36 +1,20 @@
 import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
 import { Home } from "./Home";
+import { Play } from "./Play";
 
 const App = (): JSX.Element => {
   return (
     <BrowserRouter>
       <Routes>
         <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="/play/:id" element={<Play />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </BrowserRouter>
   );
 };
 
-function About() {
-  return (
-    <div>
-      <h2>About</h2>
-    </div>
-  );
-}
-
-function Dashboard() {
-  return (
-    <div>
-      <h2>Dashboard</h2>
-    </div>
-  );
-}
-
-function NoMatch() {
+const NoMatch = (): JSX.Element => {
   return (
     <div>
       <h2>Nothing to see here!</h2>
@@ -39,6 +23,6 @@ function NoMatch() {
       </p>
     </div>
   );
-}
+};
 
 export default App;
