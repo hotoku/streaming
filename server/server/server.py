@@ -8,6 +8,11 @@ app: Flask = Flask("server", static_folder=ev.static_path)
 app.json.ensure_ascii = False  # type: ignore
 
 
+@app.route("/video/<int:id>")
+def video(id: int):
+    ret = db.get_video(id)
+
+
 @app.route("/video/list")
 def video_list():
     num = request.args.get("num") or "100"
