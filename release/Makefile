@@ -42,9 +42,12 @@ clean:
 
 .PHONY: run
 run:
-	exec gunicorn --bind :80 --workers 8 --threads 8 --timeout 0 server.server:app
+#	exec gunicorn --bind :80 --workers 8 --threads 8 --timeout 0 server.server:app
+# WEBサービスの作法的には、gunicornを立てるのが正解ぽいのだが、こっちの方が速いのでこちらを使う
+# 外部に公開するなら、gunicornを使うべき
+	PORT=80 exec python -m server
 
 
 .PHONY: debug-run
 debug-run:
-	PORT=3000 exec python -m server -d
+	PORT=8080 exec python -m server -d
