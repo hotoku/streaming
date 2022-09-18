@@ -1,6 +1,5 @@
 import "./App.css";
-import { useEffect, useState } from "react";
-import { Video } from "../types/Video";
+import { useEffect } from "react";
 import { ThumbnailList } from "../components/ThumbnailList";
 import { fetchVideoList } from "../db";
 import { useRecoilState } from "recoil";
