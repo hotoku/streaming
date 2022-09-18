@@ -5,3 +5,6 @@ dev-docs/
 /server/db/load.done
 /.log/
 release/resource/
+/release/.info.json
+/release/db/db.sqlite
+/release/db/load.done

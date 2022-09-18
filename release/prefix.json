@@ -1,4 +1,4 @@
 {
-  "/Volumes/": "videos/",
+  "/Volumes/data[0-9]+/": "videos/",
   "/Users/hotoku/projects/hotoku/streaming/release/resource/": ""
 }
