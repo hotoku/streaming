@@ -1,4 +1,4 @@
-from typing import Any, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 import re
 import pathlib as pl
 import os
@@ -36,10 +36,10 @@ class StrList(ParamType):
         return self.convert(value, param, ctx)
 
 
-def make_relative(root: str, path: str) -> str:
-    assert path.startswith(root)
-    ret = re.sub(f"^{root}/", "", path)
-    return ret
+def make_relative(prefix_info: Dict[str, str], path: str) -> str:
+    for k, v in prefix_info.items():
+        path = re.sub(f"^{k}/", v, path)
+    return path
 
 
 def make_absolute(s: Union[str, pl.Path]) -> str:
@@ -47,24 +47,28 @@ def make_absolute(s: Union[str, pl.Path]) -> str:
 
 
 @click.command()
-@click.argument("root-dir", type=click.Path(file_okay=False))
+@click.argument("prefix-info-path", type=click.Path(dir_okay=False))
 @click.argument("video-dirs", type=StrList())
 @click.argument("dest-root", type=click.Path(file_okay=False))
 @click.argument("json-path", type=click.Path(dir_okay=False))
 @click.option("--extension", type=str, default="mp4")
 @click.option("--use-pathlib/--no-use-pathlib", default=False)
 @click.option("--pos", type=str, default="00:00:00.010")
-def main(root_dir: str, video_dirs: List[str], dest_root: str, json_path: str,
+def main(prefix_info_path: str, video_dirs: List[str], dest_root: str, json_path: str,
          extension: str, use_pathlib: bool, pos: str):
-    """Make thumbnails from videos in VIDEO_DIRS. Thumbnails are saved in DEST_ROOT. Resulting paths are reported in JSON_PATH relative to ROOT_DIR.
+    """Make thumbnails from videos in VIDEO-DIRS. Thumbnails are saved in DEST-ROOT. Resulting paths are reported in JSON-PATH.
 
-    ROOT_DIR is the path of th directory where our app stores static files.
-    VIDEO_DIRS is the paths of directories where our app stores videos.
-    DEST_ROOT is the path of the directory where our app stores thumbnails.
-    JSON_PATH is the path where paths of videos and thumbnails are reported.
+
+    PREFIX-INFO-PATH is a path to a json file. The json should be an object. The object is considered as a mapping from keys to its values.
+    Prefixes of reported paths are replaced using this mapping.
+
+    VIDEO-DIRS is the paths of directories where our app stores videos.
+
+    DEST-ROOT is the path of the directory where our app stores thumbnails.
+
+    JSON-PATH is the path where paths of videos and thumbnails are reported.
     """
 
-    root_dir = make_absolute(root_dir)
     video_dirs = list(map(make_absolute, video_dirs))
     dest_root = make_absolute(dest_root)
 
@@ -88,11 +92,12 @@ def main(root_dir: str, video_dirs: List[str], dest_root: str, json_path: str,
         local_scheduler=True,
         workers=os.cpu_count()
     )
+    prefix_info = json.load(open(prefix_info_path))
     info = [
         dict(
-            video=make_relative(root_dir, f),
+            video=make_relative(prefix_info, f),
             thumbnail=make_relative(
-                root_dir, Thumbnail.dest_path(f, dest_root))
+                prefix_info, Thumbnail.dest_path(f, dest_root))
         )
         for f in files
     ]

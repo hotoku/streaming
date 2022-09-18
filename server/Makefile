@@ -30,7 +30,7 @@ db: thumbnails
 
 .PHONY: thumbnails
 thumbnails:
-	python -m thumbnail $(RESOURCE_PATH) $(VIDEO_DIR) $(THUMBNAIL_DIR) $(INFO_JSON) --use-pathlib
+	python -m thumbnail prefix.json $(VIDEO_DIR) $(THUMBNAIL_DIR) $(INFO_JSON) --use-pathlib
 
 
 .PHONY: test
