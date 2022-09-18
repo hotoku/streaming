@@ -33,8 +33,9 @@ def thumbnail(id: int):
 
 @app.route("/video/list")
 def video_list():
-    num = request.args.get("num") or "100"
-    return db.random_list(int(num))
+    num = request.args.get("num") or 100
+    ret = db.random_list(int(num))
+    return ret
 
 
 @app.route("/resource/<path:path>")
@@ -44,4 +45,6 @@ def resource(path: str):
 
 @app.route("/")
 def index():
+    if ev.static_path is None:
+        raise RuntimeError("STATIC_PATH is not set.")
     return send_file(Path(ev.static_path) / "index.html")
