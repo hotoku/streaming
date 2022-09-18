@@ -3,7 +3,7 @@ import { RecoilRoot } from "recoil";
 import { Home } from "./Home";
 import { Play } from "./Play";
 
-const App = (): JSX.Element => {
+export const App = (): JSX.Element => {
   return (
     <RecoilRoot>
       <BrowserRouter>
@@ -28,5 +28,3 @@ const NoMatch = (): JSX.Element => {
     </div>
   );
 };
-
-export default App;
