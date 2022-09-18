@@ -35,7 +35,7 @@ thumbnails:
 
 .PHONY: test
 test:
-	DB_PATH=$(PWD)/db/db.sqlite PYTHONPATH=$(PWD) pytest
+	DB_PATH=$(PWD)/db/db.sqlite pytest
 
 
 .PHONY: clean
