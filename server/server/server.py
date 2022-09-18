@@ -1,7 +1,4 @@
-import os
 from pathlib import Path
-from typing import Optional
-from click.core import Option
 from flask import Flask, request, send_from_directory
 from flask.helpers import send_file
 
