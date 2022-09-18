@@ -19,6 +19,7 @@ usage:
 	$(call indent,"make db")
 	$(call indent,"make clean")
 	$(call indent,"make run")
+	$(call indent,"make debug-run")
 
 
 .PHONY: db
@@ -41,22 +42,9 @@ clean:
 
 .PHONY: run
 run:
-#	ok
-#	PORT=3000 STATIC_PATH=$(PWD)/static DB_PATH=$(PWD)/../server/db/db.sqlite RESOURCE_PATH=$(PWD)/../server/resource exec python -m server -d
-# ng: permission
-#	PORT=80 STATIC_PATH=$(PWD)/static DB_PATH=$(PWD)/../server/db/db.sqlite RESOURCE_PATH=$(PWD)/../server/resource exec python -m server -d
-# ok
-#	PORT=80 STATIC_PATH=$(PWD)/static DB_PATH=$(PWD)/../server/db/db.sqlite RESOURCE_PATH=$(PWD)/../server/resource exec python -m server
-# ng: server runs but JS does not work in browser
-#	PORT=80 DB_PATH=$(PWD)/db/db.sqlite RESOURCE_PATH=$(PWD)/resource exec python -m server
-# ng: same as above. accessing curl works
-#	PORT=80 STATIC_PATH=$(PWD)/static DB_PATH=$(PWD)/db/db.sqlite RESOURCE_PATH=$(PWD)/resource exec python -m server
-# ok: JS work in browser
-#	PORT=80 STATIC_PATH=$(PWD)/static DB_PATH=$(PWD)/../server/db/db.sqlite RESOURCE_PATH=$(PWD)/resource exec python -m server
-# ng: server runs but JS does not work in browser. accessing curl works
-#	PORT=80 STATIC_PATH=$(PWD)/static DB_PATH=$(PWD)/db/db.sqlite RESOURCE_PATH=$(PWD)/../server/resource exec python -m server
-# ng: server runs but JS does not work in browser. accessing curl works
-	PORT=80 exec python -m server
+	exec gunicorn --bind :80 --workers 8 --threads 8 --timeout 0 server.server:app
 
 
-#	gunicorn --bind :80 --workers 1 --threads 8 --timeout 0 server.server:app
+.PHONY: debug-run
+debug-run:
+	PORT=3000 exec python -m server -d
