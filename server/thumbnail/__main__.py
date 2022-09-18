@@ -38,8 +38,11 @@ class StrList(ParamType):
 
 def make_relative(prefix_info: Dict[str, str], path: str) -> str:
     for k, v in prefix_info.items():
-        path = re.sub(f"^{k}/", v, path)
-    return path
+        print(k, v, path)
+        rex = f"^{k}"
+        if re.match(rex, path):
+            return re.sub(f"^{k}", v, path)
+    assert False
 
 
 def make_absolute(s: Union[str, pl.Path]) -> str:

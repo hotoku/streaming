@@ -1,3 +1,4 @@
 {
-  "/Users/hotoku/projects/hotoku/streaming/server/resource/videos": ""
+  "/Users/hotoku/projects/hotoku/streaming/server/resource/videos/": "videos/",
+  "/Users/hotoku/projects/hotoku/streaming/server/resource/thumbnails/": "thumbnails/"
 }

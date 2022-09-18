@@ -26,7 +26,7 @@ db: thumbnails
 .PHONY: thumbnails
 thumbnails:
 	cd ../server && python -m thumbnail \
-		$(RESOURCE_PATH) $(VIDEO_DIR) $(THUMBNAIL_DIR) $(INFO_JSON) \
+		$(PWD)/prefix.json $(VIDEO_DIR) $(THUMBNAIL_DIR) $(INFO_JSON) \
 		--pos "00:00:20.000"
 
 

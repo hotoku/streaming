@@ -2,7 +2,7 @@ LOADED := load.done
 
 
 $(LOADED): $(DB_PATH)
-	load.py $(DB_PATH) $(INFO_JSON)
+	./load.py $(DB_PATH) $(INFO_JSON)
 	touch $@
 
 
