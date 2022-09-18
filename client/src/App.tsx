@@ -1,17 +1,20 @@
 import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
+import { RecoilRoot } from "recoil";
 import { Home } from "./Home";
 import { Play } from "./Play";
 
 const App = (): JSX.Element => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="/play/:id" element={<Play />} />
-        <Route path="/play/:id/path/:path" element={<Play />} />
-        <Route path="*" element={<NoMatch />} />
-      </Routes>
-    </BrowserRouter>
+    <RecoilRoot>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/play/:id" element={<Play />} />
+          <Route path="/play/:id/path/:path" element={<Play />} />
+          <Route path="*" element={<NoMatch />} />
+        </Routes>
+      </BrowserRouter>
+    </RecoilRoot>
   );
 };
 
