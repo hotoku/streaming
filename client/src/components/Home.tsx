@@ -3,14 +3,16 @@ import { useEffect, useState } from "react";
 import { Video } from "../types/Video";
 import { ThumbnailList } from "../components/ThumbnailList";
 import { fetchVideoList } from "../db";
+import { useRecoilState } from "recoil";
+import { videoListAtom } from "../atoms";
 
 export const Home = () => {
-  const [videos, setVideos] = useState<Video[]>([]);
+  const [videoList, setVideoList] = useRecoilState(videoListAtom);
   useEffect(() => {
-    if (videos.length <= 0) {
+    if (videoList.length <= 0) {
       console.log("new list");
-      fetchVideoList(setVideos);
+      fetchVideoList(setVideoList);
     }
   }, []);
-  return ThumbnailList({ vs: videos });
+  return ThumbnailList({ vs: videoList });
 };
