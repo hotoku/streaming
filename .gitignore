@@ -8,3 +8,5 @@ dev-docs/
 /release/db/db.sqlite
 /release/db/load.done
 /release/info.hotoku.streaming.plist
+/release/server.out
+/release/server.err
