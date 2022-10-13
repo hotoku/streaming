@@ -9,9 +9,14 @@ PLIST := info.hotoku.streaming.plist
 
 
 .PHONY: load
-load: $(PLIST) unload clear-log
+load: $(PLIST) unload clear-log build
 	cp $< $(DEST)
 	launchctl load $(DEST)/$<
+
+
+.PHONY: buld
+build:
+	cd ../client && npm run build
 
 
 .PHONY: clean
