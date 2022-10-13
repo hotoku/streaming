@@ -20,12 +20,6 @@
 開発時には、`index.html`や`js`, `css`などの静的ファイルはReactの開発用サーバーから配信される。
 そのため、サーバーサイドからは動画・サムネイル以外の静的ファイルが配信されない想定となっている。
 
-## 本番用サーバー
+## 本番環境
 
-本番用のサーバーは、以下の手順で立ち上げることができる
-
-1. [/client](./client)に移動して、`npm run build`を実行
-2. [/release](./release)に移動して、`make run`を実行
-
-[/release/static](./release/static)は、[/client/build](./client/build)
-へのシンボリックリンクになっており、ビルドで生成された静的ファイルは、ここから配信される。
+[/release/readme.md](/release/readme.md)を参照
