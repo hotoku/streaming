@@ -1,7 +1,7 @@
-DB_PATH := $(PWD)/db/db.sqlite
-RESOURCE_PATH := $(PWD)/resource
-STATIC_PATH := $(PWD)/static
-PORT=80
+export DB_PATH := $(PWD)/db/db.sqlite
+export RESOURCE_PATH := $(PWD)/resource
+export STATIC_PATH := $(PWD)/static
+export PORT=80
 
 
 DEST := ~/Library/LaunchAgents
@@ -43,3 +43,8 @@ clear-log:
 		-D STATIC_PATH=$(STATIC_PATH) \
 		-D PORT=$(PORT) \
 		$< > $@
+
+
+.PHONY: start
+start:
+	./run
