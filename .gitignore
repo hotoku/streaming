@@ -3,7 +3,8 @@ dev-docs/
 /server/.info.json
 /server/db/load.done
 /.log/
-release/resource/
+/release/resource/
 /release/.info.json
 /release/db/db.sqlite
 /release/db/load.done
+/release/info.hotoku.streaming.plist

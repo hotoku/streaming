@@ -22,6 +22,12 @@ usage:
 	$(call indent,"make debug-run")
 
 
+info.hotoku.streaming.plist: info.hotoku.streaming.plist.jinja
+	jinja2 $< \
+		-D pwd=$(PWD) \
+		-o $@
+
+
 .PHONY: db
 db: thumbnails
 	make -C db
