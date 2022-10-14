@@ -1,21 +1,24 @@
 import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { Header } from "./Header";
+import ErrorBoundary from "./ErrorBoundary";
 import { Home } from "./Home";
 import { Play } from "./Play";
 
 export const App = (): JSX.Element => {
   return (
     <RecoilRoot>
-      <Header />
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="/play/:id" element={<Play />} />
-          <Route path="/play/:id/path/:path" element={<Play />} />
-          <Route path="*" element={<NoMatch />} />
-        </Routes>
-      </BrowserRouter>
+      <ErrorBoundary>
+        <Header />
+        <BrowserRouter>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="/play/:id" element={<Play />} />
+            <Route path="/play/:id/path/:path" element={<Play />} />
+            <Route path="*" element={<NoMatch />} />
+          </Routes>
+        </BrowserRouter>
+      </ErrorBoundary>
     </RecoilRoot>
   );
 };
