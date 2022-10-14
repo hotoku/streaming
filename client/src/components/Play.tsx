@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 export const Play: React.FC<{}> = () => {
@@ -6,8 +6,15 @@ export const Play: React.FC<{}> = () => {
   const id = params["id"];
   let url = `/video/${id}`;
 
+  useEffect(() => {
+    const el = document.getElementById("player") as HTMLVideoElement;
+    if (el) {
+      el.load();
+    }
+  }, [url]);
+
   return (
-    <video controls width="100%">
+    <video id="player" controls width="100%">
       <source src={url} type="video/mp4" />
     </video>
   );
