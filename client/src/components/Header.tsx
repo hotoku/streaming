@@ -53,6 +53,13 @@ export const Header = (): JSX.Element => {
     <header className={Style.header}>
       <button
         onClick={() => {
+          navigate("/");
+        }}
+      >
+        home
+      </button>
+      <button
+        onClick={() => {
           setOpen(true);
         }}
       >
