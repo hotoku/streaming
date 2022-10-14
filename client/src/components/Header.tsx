@@ -33,7 +33,7 @@ export const Header = (): JSX.Element => {
         <button
           onClick={() => {
             setOpen(false);
-            setTargetNum();
+            setTargetNum(undefined);
             navigate(`/play/${targetNum}`);
           }}
         >
