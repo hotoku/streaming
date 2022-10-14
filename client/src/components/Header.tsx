@@ -4,7 +4,7 @@ import Style from "./Header.module.css";
 
 export const Header = (): JSX.Element => {
   const [open, setOpen] = useState(false);
-  const [targetNum, setVideoNum] = useState<number | undefined>();
+  const [targetNum, setTargetNum] = useState<number | undefined>();
   const navigate = useNavigate();
 
   const dialog = (
@@ -23,7 +23,7 @@ export const Header = (): JSX.Element => {
         <div>
           <input
             onChange={(e) => {
-              setVideoNum(parseInt(e.target.value));
+              setTargetNum(parseInt(e.target.value));
             }}
             value={targetNum || ""}
             type="number"
@@ -33,6 +33,7 @@ export const Header = (): JSX.Element => {
         <button
           onClick={() => {
             setOpen(false);
+            setTargetNum();
             navigate(`/play/${targetNum}`);
           }}
         >
