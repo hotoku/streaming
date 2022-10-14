@@ -1,8 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Style from "./Header.module.css";
 
 export const Header = (): JSX.Element => {
   const [open, setOpen] = useState(false);
+  const [targetNum, setVideoNum] = useState<number | undefined>();
+  const navigate = useNavigate();
+
   const dialog = (
     <div
       style={{
@@ -16,13 +20,30 @@ export const Header = (): JSX.Element => {
       }}
     >
       <dialog open={open}>
-        <div>modal</div>
+        <div>
+          <input
+            onChange={(e) => {
+              setVideoNum(parseInt(e.target.value));
+            }}
+            value={targetNum || ""}
+            type="number"
+            min="1"
+          />
+        </div>
+        <button
+          onClick={() => {
+            setOpen(false);
+            navigate(`/play/${targetNum}`);
+          }}
+        >
+          go
+        </button>
         <button
           onClick={() => {
             setOpen(false);
           }}
         >
-          close
+          cancel
         </button>
       </dialog>
     </div>
@@ -33,7 +54,6 @@ export const Header = (): JSX.Element => {
       <button
         onClick={() => {
           setOpen(true);
-          console.log("jump");
         }}
       >
         jump

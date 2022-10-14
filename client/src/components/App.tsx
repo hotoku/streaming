@@ -9,8 +9,8 @@ export const App = (): JSX.Element => {
   return (
     <RecoilRoot>
       <ErrorBoundary>
-        <Header />
         <BrowserRouter>
+          <Header />
           <Routes>
             <Route index element={<Home />} />
             <Route path="/play/:id" element={<Play />} />

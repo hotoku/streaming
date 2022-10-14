@@ -10,7 +10,7 @@ const makeElement = (v: Video): JSX.Element => {
   const link = makeUrl(v.id);
   return (
     <Link to={link} key={v.id}>
-      <img src={turl} alt="thumbnail" width="720" />
+      <img src={turl} alt="thumbnail" width="100%" />
     </Link>
   );
 };
