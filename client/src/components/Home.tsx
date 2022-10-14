@@ -9,7 +9,6 @@ export const Home = () => {
   const [videoList, setVideoList] = useRecoilState(videoListAtom);
   useEffect(() => {
     if (videoList.length <= 0) {
-      console.log("new list");
       fetchVideoList(setVideoList);
     }
   }, []);
