@@ -7,7 +7,7 @@ export const Play: React.FC<{}> = () => {
   let url = `/video/${id}`;
 
   return (
-    <video controls width="720">
+    <video controls width="100%">
       <source src={url} type="video/mp4" />
     </video>
   );
