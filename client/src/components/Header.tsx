@@ -53,6 +53,7 @@ export const Header = (): JSX.Element => {
   return (
     <header className={Style.header}>
       <button
+        className={Style.button}
         onClick={() => {
           navigate("/");
         }}
@@ -60,6 +61,7 @@ export const Header = (): JSX.Element => {
         home
       </button>
       <button
+        className={Style.button}
         onClick={() => {
           setOpen(true);
         }}
