@@ -40,6 +40,13 @@ def resource(path: str):
     return send_from_directory(ev.resource_path, path)
 
 
+@app.post("/upload")
+def upload():
+    data = request.data
+    print(len(data))
+    return str(len(data))
+
+
 @app.route("/")
 def index():
     if ev.static_path is None:

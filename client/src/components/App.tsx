@@ -4,6 +4,7 @@ import { Header } from "./Header";
 import ErrorBoundary from "./ErrorBoundary";
 import { Home } from "./Home";
 import { Play } from "./Play";
+import Upload from "./Upload";
 
 export const App = (): JSX.Element => {
   return (
@@ -14,6 +15,7 @@ export const App = (): JSX.Element => {
           <Routes>
             <Route index element={<Home />} />
             <Route path="/play/:id" element={<Play />} />
+            <Route path="/upload" element={<Upload />} />
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </BrowserRouter>

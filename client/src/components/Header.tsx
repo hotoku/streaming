@@ -68,6 +68,13 @@ export const Header = (): JSX.Element => {
       >
         jump
       </button>
+      <button
+        onClick={() => {
+          navigate("/upload");
+        }}
+      >
+        upload
+      </button>
       {dialog}
     </header>
   );
