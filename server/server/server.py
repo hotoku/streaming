@@ -42,9 +42,8 @@ def resource(path: str):
 
 @app.post("/upload")
 def upload():
-    data = request.data
-    print(len(data))
-    return str(len(data))
+    print(request.form)
+    return "ok"
 
 
 @app.route("/")
