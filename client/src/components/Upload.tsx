@@ -1,3 +1,4 @@
+import { useCallback, useState } from "react";
 import { fileToBase64 } from "../utils";
 
 type Options = {
@@ -9,6 +10,30 @@ type Options = {
 };
 
 const Upload = (): JSX.Element => {
+  const [file, setFile] = useState<File | undefined>();
+
+  const sendFile = useCallback(async () => {
+    if (!file) {
+      return;
+    }
+    const content = await fileToBase64(file);
+
+    const data = new FormData();
+    data.append("name", file.name);
+    data.append("content", content);
+
+    const options: Options = {
+      method: "POST",
+      body: data,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    delete options.headers["Content-Type"];
+
+    await fetch("/upload", options);
+  }, [file]);
+
   return (
     <div>
       <input
@@ -18,37 +43,10 @@ const Upload = (): JSX.Element => {
         onChange={async (e) => {
           const files = e.target.files;
           if (files === null) return;
-          const file = files[0];
-          const content = await fileToBase64(file);
-
-          const data = new FormData();
-          data.append("name", file.name);
-          data.append("content", content);
-
-          const options: Options = {
-            method: "POST",
-            body: data,
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          };
-          delete options.headers["Content-Type"];
-
-          fetch("/upload", options);
+          setFile(files[0]);
         }}
       />
-      <button
-        onClick={() => {
-          const data = new FormData();
-          data.append("name", "hoge");
-          fetch("/upload", {
-            method: "POST",
-            body: data,
-          });
-        }}
-      >
-        push
-      </button>
+      <button onClick={sendFile}>upload</button>
     </div>
   );
 };
