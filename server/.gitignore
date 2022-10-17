@@ -4,4 +4,6 @@
 /resource/videos/*.mp4
 /resource/thumbnails/
 !/resource/thumbnails/.gitkeep
+/resource/uploaded/
+!/resource/uploaded/.gitkeep
 .python-version

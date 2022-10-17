@@ -1,6 +1,9 @@
+import base64
 from pathlib import Path
+
 from flask import Flask, request, send_from_directory
 from flask.helpers import send_file
+
 
 from . import db
 from . import environment_variables as ev
@@ -42,7 +45,8 @@ def resource(path: str):
 
 @app.post("/upload")
 def upload():
-    print(request.form)
+    print(request.form["name"])
+    print(request.form["content"])
     return "ok"
 
 
