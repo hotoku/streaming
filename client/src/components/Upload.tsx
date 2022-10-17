@@ -1,3 +1,5 @@
+import { read } from "fs";
+
 type Options = {
   method: "POST";
   body: any;
@@ -17,6 +19,14 @@ const Upload = (): JSX.Element => {
           const files = e.target.files;
           if (files === null) return;
           const file = files[0];
+          const reader = new FileReader();
+          reader.onload = () => {
+            console.log(typeof reader.result);
+            console.log(reader.result);
+          };
+
+          // reader.readAsBinaryString(file);
+          reader.readAsArrayBuffer(file);
 
           const data = new FormData();
           data.append("name", file.name);
