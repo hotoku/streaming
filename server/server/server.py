@@ -1,7 +1,8 @@
 import base64
 from pathlib import Path
+import os
 
-from flask import Flask, request, send_from_directory
+from flask import Flask, abort, request, send_from_directory
 from flask.helpers import send_file
 
 
@@ -45,8 +46,14 @@ def resource(path: str):
 
 @app.post("/upload")
 def upload():
-    print(request.form["name"])
-    print(request.form["content"])
+    name = request.form["name"]
+    content = request.form["content"]
+    path = os.path.join(ev.uploaded_path, name)
+    if os.path.exists(path):
+        abort(409)
+    with open(path, "wb") as f:
+        val = base64.b64decode(content)
+        f.write(val)
     return "ok"
 
 
