@@ -1,4 +1,4 @@
-import { read } from "fs";
+import { fileToBase64 } from "../utils";
 
 type Options = {
   method: "POST";
@@ -15,22 +15,15 @@ const Upload = (): JSX.Element => {
         type="file"
         multiple
         id="hoge"
-        onChange={(e) => {
+        onChange={async (e) => {
           const files = e.target.files;
           if (files === null) return;
           const file = files[0];
-          const reader = new FileReader();
-          reader.onload = () => {
-            console.log(typeof reader.result);
-            console.log(reader.result);
-          };
-
-          // reader.readAsBinaryString(file);
-          reader.readAsArrayBuffer(file);
+          const content = await fileToBase64(file);
 
           const data = new FormData();
           data.append("name", file.name);
-          data.append("content", file);
+          data.append("content", content);
 
           const options: Options = {
             method: "POST",
