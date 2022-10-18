@@ -3,24 +3,6 @@ import { blobToBase64 } from "../utils";
 
 const chunkSize = 1024 * 1024;
 
-const sendChunk = async (
-  chunk: Blob,
-  name: string,
-  num: number,
-  onFinish: (n: number) => void
-): Promise<void> => {
-  const b64 = await blobToBase64(chunk);
-  const data = new FormData();
-  data.append("name", `${name}-${num}`);
-  data.append("content", b64);
-  const options = {
-    method: "POST",
-    body: data,
-  };
-  const ret = await fetch(`/upload?num=${num}`, options);
-  onFinish(num);
-};
-
 class Counter {
   num: number;
   constructor() {
@@ -38,7 +20,25 @@ const Upload = (): JSX.Element => {
   const [file, setFile] = useState<File | undefined>();
   const [sending, setSending] = useState(false);
   const [numTotalChunk, setNumTotalChunk] = useState(0);
-  const [numSent, setNumSent] = useState<number>(-1);
+  const [numSent, setNumSent] = useState<number>(0);
+
+  const sendChunk = async (
+    chunk: Blob,
+    name: string,
+    num: number
+  ): Promise<void> => {
+    const b64 = await blobToBase64(chunk);
+    const data = new FormData();
+    data.append("name", `${name}-${num}`);
+    data.append("content", b64);
+    const options = {
+      method: "POST",
+      body: data,
+    };
+    const ret = await fetch(`/upload?num=${num}`, options);
+    console.log(`finish ${num}, ${numSent}`);
+    setNumSent(numSent + 1);
+  };
 
   const sendFile = async () => {
     if (!file) {
@@ -51,12 +51,7 @@ const Upload = (): JSX.Element => {
     const pros = [] as Promise<void>[];
     for (let i: number = 0; i < numChunk; i++) {
       const chunk = file.slice(i * chunkSize, (i + 1) * chunkSize);
-      pros.push(
-        sendChunk(chunk, file.name, i, (n) => {
-          setNumSent(n);
-          console.log(n, numSent);
-        })
-      );
+      pros.push(sendChunk(chunk, file.name, i));
     }
     await Promise.all(pros);
   };

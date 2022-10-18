@@ -50,7 +50,7 @@ def upload():
     content = request.form["content"]
     path = os.path.join(ev.uploaded_path, name)
     if os.path.exists(path):
-        abort(409)
+        return "existing"
     with open(path, "wb") as f:
         val = base64.b64decode(content)
         f.write(val)
