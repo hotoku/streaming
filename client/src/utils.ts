@@ -1,5 +1,5 @@
-export const fileToBase64 = async (file: File): Promise<string> => {
-  const buf = await readAsArrayBuffer(file);
+export const blobToBase64 = async (blob: Blob): Promise<string> => {
+  const buf = await readAsArrayBuffer(blob);
   return arrayBufferToBase64(buf);
 };
 
@@ -13,7 +13,7 @@ const arrayBufferToBase64 = (buffer: ArrayBuffer): string => {
   return window.btoa(binary);
 };
 
-const readAsArrayBuffer = (file: File): Promise<ArrayBuffer> => {
+const readAsArrayBuffer = (blob: Blob): Promise<ArrayBuffer> => {
   const reader = new FileReader();
 
   return new Promise<ArrayBuffer>((resolve, reject) => {
@@ -26,9 +26,9 @@ const readAsArrayBuffer = (file: File): Promise<ArrayBuffer> => {
 
     reader.onerror = () => {
       reader.abort();
-      reject(`file read error: ${file.name}`);
+      reject(`blob read error`);
     };
 
-    reader.readAsArrayBuffer(file);
+    reader.readAsArrayBuffer(blob);
   });
 };

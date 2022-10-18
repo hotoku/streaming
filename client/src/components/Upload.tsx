@@ -1,5 +1,6 @@
+import { read } from "fs";
 import { useCallback, useState } from "react";
-import { fileToBase64 } from "../utils";
+import { blobToBase64 } from "../utils";
 
 type Options = {
   method: "POST";
@@ -9,6 +10,14 @@ type Options = {
   };
 };
 
+const chunkSize = 1024 * 1024;
+
+const sendChunk = async (chunk: Blob, num: number): Promise<number> => {
+  const b64 = await blobToBase64(chunk);
+  console.log(num, b64.length);
+  return b64.length;
+};
+
 const Upload = (): JSX.Element => {
   const [file, setFile] = useState<File | undefined>();
 
@@ -16,22 +25,12 @@ const Upload = (): JSX.Element => {
     if (!file) {
       return;
     }
-    const content = await fileToBase64(file);
+    const numChunk = Math.ceil(file.size / chunkSize);
 
-    const data = new FormData();
-    data.append("name", file.name);
-    data.append("content", content);
-
-    const options: Options = {
-      method: "POST",
-      body: data,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    };
-    delete options.headers["Content-Type"];
-
-    await fetch("/upload", options);
+    for (let i: number = 0; i < numChunk; i++) {
+      const chunk = file.slice(i * chunkSize, (i + 1) * chunkSize);
+      await sendChunk(chunk, i);
+    }
   }, [file]);
 
   return (
