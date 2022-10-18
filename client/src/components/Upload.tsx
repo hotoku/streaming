@@ -17,27 +17,49 @@ const sendChunk = async (
     method: "POST",
     body: data,
   };
-  await fetch("/upload", options);
+  const ret = await fetch(`/upload?num=${num}`, options);
   onFinish(num);
 };
 
+class Counter {
+  num: number;
+  constructor() {
+    this.num = 0;
+  }
+  increment = () => {
+    this.num += 1;
+  };
+  reset = () => {
+    this.num = 0;
+  };
+}
+
 const Upload = (): JSX.Element => {
   const [file, setFile] = useState<File | undefined>();
+  const [sending, setSending] = useState(false);
+  const [numTotalChunk, setNumTotalChunk] = useState(0);
+  const [numSent, setNumSent] = useState<number>(-1);
 
-  const sendFile = useCallback(async () => {
+  const sendFile = async () => {
     if (!file) {
       return;
     }
-    console.log("sendFile");
+    setSending(true);
     const numChunk = Math.ceil(file.size / chunkSize);
+    setNumTotalChunk(numChunk);
 
+    const pros = [] as Promise<void>[];
     for (let i: number = 0; i < numChunk; i++) {
       const chunk = file.slice(i * chunkSize, (i + 1) * chunkSize);
-      await sendChunk(chunk, file.name, i, (n) => {
-        console.log(`${n} done`);
-      });
+      pros.push(
+        sendChunk(chunk, file.name, i, (n) => {
+          setNumSent(n);
+          console.log(n, numSent);
+        })
+      );
     }
-  }, [file]);
+    await Promise.all(pros);
+  };
 
   return (
     <div>
@@ -52,9 +74,11 @@ const Upload = (): JSX.Element => {
         }}
       />
       <button onClick={sendFile}>upload</button>
-      <div>
-        upload機能は、進捗の表示とバックグラウンドでの実行とサーバー側で非同期処理を入れないと使い物にならないので、しばらくほっとく。
-      </div>
+      {sending ? (
+        <div>
+          sending {numSent} / {numTotalChunk}
+        </div>
+      ) : null}
     </div>
   );
 };
