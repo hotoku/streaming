@@ -47,6 +47,9 @@ const Upload = (): JSX.Element => {
         }}
       />
       <button onClick={sendFile}>upload</button>
+      <div>
+        upload機能は、進捗の表示とバックグラウンドでの実行とサーバー側で非同期処理を入れないと使い物にならないので、しばらくほっとく。
+      </div>
     </div>
   );
 };
