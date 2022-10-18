@@ -1,14 +1,6 @@
 import { useCallback, useState } from "react";
 import { blobToBase64 } from "../utils";
 
-type Options = {
-  method: "POST";
-  body: any;
-  headers: {
-    "Content-Type"?: string;
-  };
-};
-
 const chunkSize = 1024 * 1024;
 
 const sendChunk = async (
@@ -21,14 +13,10 @@ const sendChunk = async (
   const data = new FormData();
   data.append("name", `${name}-${num}`);
   data.append("content", b64);
-  const options: Options = {
+  const options = {
     method: "POST",
     body: data,
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
   };
-  delete options.headers["Content-Type"];
   await fetch("/upload", options);
   onFinish(num);
 };
