@@ -1,4 +1,3 @@
-import { read } from "fs";
 import { useCallback, useState } from "react";
 import { blobToBase64 } from "../utils";
 
