@@ -12,10 +12,21 @@ type Options = {
 
 const chunkSize = 1024 * 1024;
 
-const sendChunk = async (chunk: Blob, num: number): Promise<number> => {
+const sendChunk = async (chunk: Blob, name: string): Promise<void> => {
   const b64 = await blobToBase64(chunk);
-  console.log(num, b64.length);
-  return b64.length;
+  const data = new FormData();
+  data.append("name", name);
+  data.append("content", b64);
+  const options: Options = {
+    method: "POST",
+    body: data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+  delete options.headers["Content-Type"];
+  const ret = await fetch("/upload", options);
+  console.log(name, ret);
 };
 
 const Upload = (): JSX.Element => {
@@ -25,11 +36,12 @@ const Upload = (): JSX.Element => {
     if (!file) {
       return;
     }
+    console.log("sendFile");
     const numChunk = Math.ceil(file.size / chunkSize);
 
     for (let i: number = 0; i < numChunk; i++) {
       const chunk = file.slice(i * chunkSize, (i + 1) * chunkSize);
-      await sendChunk(chunk, i);
+      await sendChunk(chunk, `${file.name}-${i}`);
     }
   }, [file]);
 
