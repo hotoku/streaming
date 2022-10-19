@@ -22,6 +22,8 @@ const Upload = (): JSX.Element => {
   const [numTotalChunk, setNumTotalChunk] = useState(0);
   const [numSent, setNumSent] = useState<number>(0);
 
+  const getNumSent = useCallback(() => numSent, [numSent]);
+
   const sendChunk = async (
     chunk: Blob,
     name: string,
@@ -36,8 +38,8 @@ const Upload = (): JSX.Element => {
       body: data,
     };
     const ret = await fetch(`/upload?num=${num}`, options);
-    console.log(`finish ${num}, ${numSent}`);
-    setNumSent(numSent + 1);
+    console.log(`finish ${num}, ${getNumSent()}`);
+    setNumSent(getNumSent() + 1);
   };
 
   const sendFile = async () => {
