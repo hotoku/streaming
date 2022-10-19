@@ -2,7 +2,7 @@ import base64
 from pathlib import Path
 import os
 
-from flask import Flask, abort, request, send_from_directory
+from flask import Flask, request, send_from_directory
 from flask.helpers import send_file
 
 
