@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { blobToBase64 } from "../utils";
 
 const chunkSize = 1024 * 1024 * 10;
@@ -57,7 +57,9 @@ const Upload = (): JSX.Element => {
           setFile(files[0]);
         }}
       />
-      <button onClick={sendFile}>upload</button>
+      <button disabled={sending} onClick={sendFile}>
+        upload
+      </button>
       {sending ? (
         <div>
           sending {numSent} / {numTotalChunk}
