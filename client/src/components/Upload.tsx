@@ -1,30 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { blobToBase64 } from "../utils";
 
-const chunkSize = 1024 * 1024 * 30;
-
-const useCounter = () => {
-  const [count, setCount] = useState(0);
-  return [() => count, () => setCount(count + 1)];
-};
-
-class Counter {
-  private cnt: number;
-  constructor() {
-    this.cnt = 0;
-  }
-  increment = () => {
-    this.cnt += 1;
-  };
-  reset = () => {
-    this.cnt = 0;
-  };
-  get = () => {
-    return this.cnt;
-  };
-}
-
-const COUNTER = new Counter();
+const chunkSize = 1024 * 1024 * 10;
 
 const Upload = (): JSX.Element => {
   const [file, setFile] = useState<File | undefined>();
@@ -47,8 +24,7 @@ const Upload = (): JSX.Element => {
     };
 
     await fetch(`/upload?num=${num}`, options);
-    COUNTER.increment();
-    setNumSent(COUNTER.get());
+    setNumSent((n) => n + 1);
   };
 
   const sendFile = async () => {
@@ -56,8 +32,7 @@ const Upload = (): JSX.Element => {
       return;
     }
     setSending(true);
-    COUNTER.reset();
-    setNumSent(COUNTER.get());
+    setNumSent(0);
     const numChunk = Math.ceil(file.size / chunkSize);
     setNumTotalChunk(numChunk);
 
@@ -67,7 +42,7 @@ const Upload = (): JSX.Element => {
       pros.push(sendChunk(chunk, file.name, i));
     }
     await Promise.all(pros);
-    // setSending(false);
+    setSending(false);
   };
 
   return (
