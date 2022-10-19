@@ -3,24 +3,17 @@ import { blobToBase64 } from "../utils";
 
 const chunkSize = 1024 * 1024;
 
-class Counter {
-  num: number;
-  constructor() {
-    this.num = 0;
-  }
-  increment = () => {
-    this.num += 1;
-  };
-  reset = () => {
-    this.num = 0;
-  };
-}
+const useCounter = () => {
+  const [count, setCount] = useState(0);
+  return [() => count, () => setCount(count + 1)];
+};
 
 const Upload = (): JSX.Element => {
   const [file, setFile] = useState<File | undefined>();
   const [sending, setSending] = useState(false);
   const [numTotalChunk, setNumTotalChunk] = useState(0);
   const [numSent, setNumSent] = useState<number>(0);
+  const [count, increment] = useCounter();
 
   const getNumSent = useCallback(() => numSent, [numSent]);
 
@@ -38,8 +31,8 @@ const Upload = (): JSX.Element => {
       body: data,
     };
     const ret = await fetch(`/upload?num=${num}`, options);
-    console.log(`finish ${num}, ${getNumSent()}`);
-    setNumSent(getNumSent() + 1);
+    console.log(`finish ${num}, ${count()}`);
+    increment();
   };
 
   const sendFile = async () => {
