@@ -8,7 +8,7 @@
 
 本番サーバーは、Launch Controlによるサービスとして運用する。
 
-このフォルダで、`make -f release.mk load`を実行する。
+このフォルダで、`make -f release.mk start`を実行する。
 
 [./static](./static)は、[../client/build](./client/build)
 へのシンボリックリンクになっており、ビルドで生成された静的ファイルは、ここから配信される。
