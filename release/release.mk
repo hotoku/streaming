@@ -15,3 +15,8 @@ build:
 .PHONY: start
 start: build
 	./run
+
+
+.PHONY: debug
+debug: build
+	cd ../server && PORT=8081 poetry run python -m server -d
