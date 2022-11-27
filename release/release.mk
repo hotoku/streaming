@@ -4,7 +4,7 @@ export UPLOADED_PATH := $(PWD)/resource/uploaded
 export ROOT_PATH := $(PWD)/../client/build
 
 
-export PORT=80
+export PORT=22345
 
 
 .PHONY: buld
