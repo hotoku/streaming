@@ -11,7 +11,7 @@ from . import environment_variables as ev
 
 
 app: Flask = Flask("server",
-                   static_folder=os.path.join(os.getcwd(),  "static"))
+                   static_folder=os.path.join(ev.root_path,  "static"))
 app.json.ensure_ascii = False  # type: ignore
 
 
@@ -58,4 +58,4 @@ def upload():
 @app.route("/<path:path>")
 def index(path: str):
     print(f"{path=}")
-    return send_file(os.path.join(os.getcwd(), "index.html"))
+    return send_file(os.path.join(ev.root_path, "index.html"))

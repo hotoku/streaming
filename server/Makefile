@@ -2,6 +2,7 @@ export INFO_JSON := $(PWD)/.info.json
 export DB_PATH := $(PWD)/db/db.sqlite
 export RESOURCE_PATH := $(PWD)/resource
 export UPLOADED_PATH := $(RESOURCE_PATH)/uploaded
+export ROOT_PATH := $(PWD)/../client/build
 VIDEO_DIR = $(RESOURCE_PATH)/videos
 THUMBNAIL_DIR = $(RESOURCE_PATH)/thumbnails
 
@@ -21,7 +22,7 @@ usage:
 
 .PHONY: start
 start:
-	cd ../client/build && python -m server -d
+	python -m server -d
 
 
 .PHONY: db
