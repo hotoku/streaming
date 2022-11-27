@@ -21,7 +21,7 @@ usage:
 
 .PHONY: start
 start:
-	python -m server -d
+	cd ../client/build && python -m server -d
 
 
 .PHONY: db

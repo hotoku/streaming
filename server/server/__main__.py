@@ -10,9 +10,10 @@ LOGGER = logging.getLogger(__name__)
 @click.command()
 @click.option("-d", "--debug/--nodebu", type=bool, default=False)
 def main(debug: bool):
+    import os
+    print(f"{os.getcwd()=}")
     host = "127.0.0.1" if debug else "0.0.0.0"
     APP.run(host=host, port=ev.port, debug=debug)
-    # APP.run(host=host, port=80, debug=debug)
 
 
 if __name__ == "__main__":

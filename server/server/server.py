@@ -4,19 +4,14 @@ import os
 
 from flask import Flask, request, send_from_directory
 from flask.helpers import send_file
-from flask.json.provider import _default
 
 
 from . import db
 from . import environment_variables as ev
 
 
-if ev.static_path is not None:
-    app: Flask = Flask("server",
-                       static_url_path="/",
-                       static_folder=ev.static_path)
-else:
-    app: Flask = Flask("server")
+app: Flask = Flask("server",
+                   static_folder=os.path.join(os.getcwd(),  "static"))
 app.json.ensure_ascii = False  # type: ignore
 
 
@@ -60,15 +55,7 @@ def upload():
 
 
 @app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
 def index(path: str):
     print(f"{path=}")
-    if ev.static_path is None:
-        raise RuntimeError("STATIC_PATH is not set.")
-    return send_file(Path(ev.static_path) / "index.html")
-
-
-@app.route("/play/<int:num>")
-def play(num: int):
-    if ev.static_path is None:
-        raise RuntimeError("STATIC_PATH is not set.")
-    return send_file(Path(ev.static_path) / "index.html")
+    return send_file(os.path.join(os.getcwd(), "index.html"))
