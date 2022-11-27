@@ -1,9 +1,9 @@
 export DB_PATH := $(PWD)/db/db.sqlite
 export RESOURCE_PATH := $(PWD)/resource
 export UPLOADED_PATH := $(PWD)/resource/uploaded
+export ROOT_PATH := $(PWD)/../client/build
 
 
-export STATIC_PATH := $(PWD)/static
 export PORT=80
 
 
