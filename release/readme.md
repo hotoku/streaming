@@ -6,9 +6,7 @@
 
 ### サービス起動
 
-本番サーバーは、Launch Controlによるサービスとして運用する。
-
-このフォルダで、`make -f release.mk start`を実行する。
+本番サーバーは、Launch Controlによるサービスとして運用する・・つもりだったが、launch controlから起動すると外部ディスクが読めなかったので、しばらくは手動起動とする。このフォルダで`./run`を実行すれば良い。
 
 [./static](./static)は、[../client/build](./client/build)
 へのシンボリックリンクになっており、ビルドで生成された静的ファイルは、ここから配信される。
