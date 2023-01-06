@@ -2,4 +2,4 @@
 
 
 cd ../server
-poetry run python -m server
+PORT=12346 poetry run python -m server
